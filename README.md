@@ -1,5 +1,12 @@
 # row-mapper
-Move and convert rows between database tables safely and efficiently.
+
+Efficiently move/map rows between PostgreSQL database tables.
+
+## Install
+
+```bash
+$ npm i row-mapper
+```
 
 ## Use case
 
