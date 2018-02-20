@@ -1,5 +1,7 @@
 'use strict'
 
+const path = require('path')
+const fs = require('fs')
 const chai = require('chai')
 const expect = chai.expect
 const utils = require('./utils')
@@ -40,6 +42,10 @@ beforeEach(() => {
   })
 
   return utils.setupDB({ sourceDB: mapper.source, targetDB: mapper.target })
+})
+
+after(() => {
+  fs.writeFileSync(path.resolve(__dirname, '../src/cache/cache'), '', 'utf8')
 })
 
 describe('#start() - No failures during processing', () => {

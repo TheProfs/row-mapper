@@ -88,3 +88,7 @@ describe('#set', () => {
     })
   })
 })
+
+after(() => {
+  fs.writeFileSync(cachePath, '', 'utf8')
+})
