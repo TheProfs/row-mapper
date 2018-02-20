@@ -1,6 +1,6 @@
 {
   "name": "row-mapper",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Efficiently move/map rows between PostgreSQL database tables",
   "main": "index.js",
   "scripts": {
