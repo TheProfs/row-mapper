@@ -3,10 +3,7 @@
 const db = require('knex')
 const _ = require('lodash')
 const chalk = require('chalk')
-const inquirer = require('inquirer')
 const Cache = require('./src/cache')
-
-const prompt = inquirer.createPromptModule()
 
 class RowMapper {
   constructor(opts) {
