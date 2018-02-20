@@ -1,7 +1,5 @@
 'use strict'
 
-const path = require('path')
-const fs = require('fs')
 const chai = require('chai')
 const expect = chai.expect
 const utils = require('./utils')
@@ -45,7 +43,7 @@ beforeEach(() => {
 })
 
 after(() => {
-  fs.writeFileSync(path.resolve(__dirname, '../src/cache/cache'), '', 'utf8')
+  utils.clearCache()
 })
 
 describe('#start() - No failures during processing', () => {
@@ -58,6 +56,35 @@ describe('#start() - No failures during processing', () => {
     }
 
     return mapper.clearCache().start().then(() => {
+      return mapper.target.select('*').from('target')
+    }).then(targetRows => {
+      targetRows.should.have.length(10)
+      targetRows.should.deep.equal([
+        { id: 1, value: 'foo' },
+        { id: 2, value: 'foo' },
+        { id: 3, value: 'foo' },
+        { id: 4, value: 'foo' },
+        { id: 5, value: 'foo' },
+        { id: 6, value: 'foo' },
+        { id: 7, value: 'foo' },
+        { id: 8, value: 'foo' },
+        { id: 9, value: 'foo' },
+        { id: 10, value: 'foo' }
+      ])
+
+      restartedSequences.should.be.ok
+    })
+  })
+
+  it('clears cache, allowing another run without prompting for cache', () => {
+    let restartedSequences = false
+
+    mapper._restartPKSequence = () => {
+      restartedSequences = true
+      return Promise.resolve()
+    }
+
+    return mapper.start().then(() => {
       return mapper.target.select('*').from('target')
     }).then(targetRows => {
       targetRows.should.have.length(10)

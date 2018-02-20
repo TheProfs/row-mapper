@@ -51,6 +51,7 @@ class RowMapper {
       }
     }
 
+    this.cache.clear()
     await this._restartPKSequence()
 
     this.log({ msg: 'All chunks have been processed!', type: 'success' })

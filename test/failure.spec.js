@@ -1,7 +1,5 @@
 'use strict'
 
-const path = require('path')
-const fs = require('fs')
 const chai = require('chai')
 const expect = chai.expect
 const utils = require('./utils')
@@ -51,7 +49,7 @@ describe('#start() - Mid-processing failure', () => {
   })
 
   after(() => {
-    fs.writeFileSync(path.resolve(__dirname, '../src/cache/cache'), '', 'utf8')
+    utils.clearCache()
   })
 
   it('rejects with the error', () => {

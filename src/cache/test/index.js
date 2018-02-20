@@ -17,6 +17,10 @@ beforeEach(() => {
   cache = new Cache()
 })
 
+after(() => {
+  utils.clearCache()
+})
+
 describe('#get - empty cache', () => {
   it(`creates a cache file if it doesn't exist`, () => {
     return cache.get().then(result => {
@@ -87,8 +91,4 @@ describe('#set', () => {
       result.should.equal(0)
     })
   })
-})
-
-after(() => {
-  fs.writeFileSync(cachePath, '', 'utf8')
 })
