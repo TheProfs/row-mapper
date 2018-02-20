@@ -37,7 +37,7 @@ describe('#get - empty cache', () => {
     describe('#get - filled cache - permission given', function() {
       it('returns the cache', () => {
         fs.writeFileSync(cachePath, 10, 'utf8')
-        utils.answerConfirm(true)
+        utils.confirmDialog(true)
 
         return cache.get().then(result => {
           result.should.be.a('Number')
@@ -49,7 +49,7 @@ describe('#get - empty cache', () => {
     describe('#get - filled cache - permission not given', function() {
       it('returns null', () => {
         fs.writeFileSync(cachePath, 10, 'utf8')
-        utils.answerConfirm(false)
+        utils.confirmDialog(false)
 
         return cache.get().then(result => {
           result.should.be.a('Number')
@@ -71,7 +71,7 @@ describe('#get - empty cache', () => {
 describe('#set', () => {
   it('sets the cache', () => {
     cache.set(40)
-    utils.answerConfirm(true)
+    utils.confirmDialog(true)
 
     return cache.get().then(result => {
       result.should.be.a('Number')

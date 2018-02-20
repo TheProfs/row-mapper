@@ -1,12 +1,9 @@
 'use strict'
 
-const robot = require('robotjs')
+const bddStdin = require('bdd-stdin')
 
 module.exports = {
-  answerConfirm: bool => {
-    setTimeout(() => {
-      robot.typeString(bool ? 'y' : 'n')
-      robot.keyTap('enter')
-    }, 500)
+  confirmDialog: bool => {
+    bddStdin(bool ? 'y' : 'n', '\u001bOM', '\n')
   }
 }

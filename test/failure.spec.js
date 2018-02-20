@@ -74,7 +74,7 @@ describe('#start() - Mid-processing failure', () => {
       return Promise.resolve()
     }
 
-    utils.answerConfirm(true)
+    utils.confirmDialog(true)
     mapper.start().then(() => {
       mapper.target.select('*').from('target').then(targetRows => {
         targetRows.should.have.length(10)
