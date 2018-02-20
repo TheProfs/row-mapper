@@ -111,6 +111,6 @@ $ npm test
 
 ## License
 
-Proprietary
+MIT
 
 [the-profs-gh]: https://github.com/TheProfs
