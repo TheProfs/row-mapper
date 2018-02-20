@@ -1,5 +1,7 @@
 # row-mapper
 
+[![Build Status](https://travis-ci.org/TheProfs/row-mapper.svg?branch=master)](https://travis-ci.org/TheProfs/row-mapper)
+
 Efficiently move/map rows between PostgreSQL database tables.
 
 ## Install
