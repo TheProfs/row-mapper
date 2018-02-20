@@ -1,0 +1,40 @@
+{
+  "name": "row-mapper",
+  "version": "0.1.0",
+  "description": "Convert rows of a table safely and efficiently",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/index.js --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheProfs/row-mapper.git"
+  },
+  "keywords": [
+    "mapper",
+    "data",
+    "conversion",
+    "bitpaper"
+  ],
+  "author": "@TheProfs",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/TheProfs/row-mapper/issues"
+  },
+  "homepage": "https://github.com/TheProfs/row-mapper#readme",
+  "dependencies": {
+    "chalk": "^2.3.1",
+    "inquirer": "^5.1.0",
+    "knex": "^0.14.3",
+    "lodash": "^4.17.5",
+    "pg": "^7.4.1",
+    "shortid": "^2.2.8"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.0.1",
+    "robotjs": "^0.4.7",
+    "sqlite3": "^3.1.13"
+  }
+}
