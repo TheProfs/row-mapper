@@ -13,7 +13,7 @@ $ npm i row-mapper
 ## Use case
 
 Assume you have a table named `event` and you want to move all it's rows
-to another table named `new_event`.
+to another table named `new_event` - which could reside in another database.
 
 While you move the data you might also need to convert each row's data to
 another format.
@@ -44,8 +44,10 @@ const mapper = new RowMapper({
     }
   },
 
-  // The target database, where data would be moved to.
-  //  - This can be the same as the source DB.
+  /*
+    The target database, where data would be moved to.
+    - This can be the same as the source DB.
+   */
   target: {
     // DB settings
     client: 'pg',
@@ -60,9 +62,11 @@ const mapper = new RowMapper({
     table: {
       name: 'new_event',
       primaryKey: 'new_id_event',
-      // Name of the sequence associated with the primary key.
-      // - Upon succesful completion of processing, this sequence will
-      //   be reset to the max value of the id_event.
+      /*
+        Name of the sequence associated with the primary key.
+        - Upon succesful completion, this sequence will be
+          set to the max value of the primary key column of the target table.
+       */
       primaryKeySequence: 'event_id_new_event_seq'
     }
   },
@@ -70,8 +74,10 @@ const mapper = new RowMapper({
   // How many rows to process, per chunk. Defaults to 2000.
   chunkSize: 3000,
 
-  // This mapper function will run for *each* row of the source table.
-  // - You can convert each row here before you insert it to your target table.
+  /*
+    This mapper function will run for *each* row of the source table.
+    - You can convert each row here before you insert it to your target table.
+   */
   mapperFn: (row, i) => {
     return {
       new_id_event: row.id_event,
@@ -83,11 +89,9 @@ const mapper = new RowMapper({
 // Then just run the mapper
 mapper.start().then(result => {
   console.log('Success')
-  process.exit()
 })
 .catch(err => {
   console.error(err)
-  process.exit()
 })
 ```
 
@@ -106,6 +110,9 @@ mapper.start().then(result => {
 ```bash
 $ npm test
 ```
+
+**Important:** Tests are run against an in-memory SQLite database and do
+not reset the table PK sequences after they are done.
 
 ## Authors
 
