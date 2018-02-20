@@ -12,8 +12,9 @@ $ npm i row-mapper
 
 ## Use case
 
-Assume you have a table named `event` and you want to move all it's rows
-to another table named `new_event` - which could reside in another database.
+Assume you have a table named `users` and you want to move all it's rows
+to another table named `archived_users` - which could reside in another
+database.
 
 While you move the data you might also need to convert each row's data to
 another format.
@@ -39,8 +40,8 @@ const mapper = new RowMapper({
 
     // The table to get data from.
     table: {
-      name: 'event',
-      primaryKey: 'id_event'
+      name: 'users',
+      primaryKey: 'id_user'
     }
   },
 
@@ -60,14 +61,14 @@ const mapper = new RowMapper({
 
     // The table to insert data to.
     table: {
-      name: 'new_event',
-      primaryKey: 'new_id_event',
+      name: 'archived_users',
+      primaryKey: 'id_user',
       /*
         Name of the sequence associated with the primary key.
         - Upon succesful completion, this sequence will be
           set to the max value of the primary key column of the target table.
        */
-      primaryKeySequence: 'event_id_new_event_seq'
+      primaryKeySequence: 'user_id_user_seq'
     }
   },
 
@@ -79,9 +80,9 @@ const mapper = new RowMapper({
     - You can convert each row here before you insert it to your target table.
    */
   mapperFn: (row, i) => {
-    return {
-      new_id_event: row.id_event,
-      name: row.name === 'item-added' ? 'item-inserted' : row.name
+    return Object.assign(row, {
+      archived_date: new Date(),
+      archiver: 'John Doe'
     }
   }
 })
