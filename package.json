@@ -1,7 +1,7 @@
 {
   "name": "row-mapper",
   "version": "1.0.1",
-  "description": "Efficiently move/map rows between PostgreSQL database tables",
+  "description": "Efficiently move/map/migrate rows between PostgreSQL database tables",
   "main": "index.js",
   "scripts": {
     "test": "mocha test/index.js --exit"

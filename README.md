@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/TheProfs/row-mapper.svg?branch=master)](https://travis-ci.org/TheProfs/row-mapper)
 
-Efficiently move/map rows between PostgreSQL database tables.
+Efficiently move/map/migrate rows between PostgreSQL database tables.
 
 ## Install
 
@@ -10,7 +10,42 @@ Efficiently move/map rows between PostgreSQL database tables.
 $ npm i row-mapper
 ```
 
-## Use case
+## Use cases
+
+### Perform minimal downtime data migrations/conversions
+
+Successfully inserted/mapped rows are saved in a *cache*. When you start
+processing again, the module will skip processed rows and continue from the
+last known succesful row.
+
+The cache allows restarting the process from the last-succesful-point after a
+run.
+
+In a production system where minimal downtime is mandated you would:
+
+   1. Migrate/convert a sources table's rows to a target table.
+   2. Stop read/writes to the source table temporarily - i.e put app in
+      "maintenance mode".
+   3. Re-run the row-mapper to transfer the new rows that were inserted by
+      users while Step 1 was running.
+      The cache ensures that only new rows
+      are transferred from the source table.
+   4. Drop source table & rename target table as source table.
+   5. Re-enable read/writes to source table - i.e put app out of
+      "maintenance mode".
+
+
+The cache also ensures the conversion is fault-tolerant. If your system
+crashes while processing, you can simply restart the conversion from the last
+known succesful point.
+
+### Convert big tables
+
+You can convert huge tables. This module processes rows in *chunks*, so it
+avoids a lot of network roundtrips whilst keeping memory usage low since it
+doesn't load the whole table in-memory.
+
+## Usage
 
 Assume you have a table named `users` and you want to move all it's rows
 to another table named `archived_users` - which could reside in another
@@ -95,16 +130,6 @@ mapper.start().then(result => {
   console.error(err)
 })
 ```
-
-## Features
-
-- You can convert huge tables. This module processes rows in *chunks*, so
-  it avoids a lot of network roundtrips whilst keeping memory usage low since
-  we it doesn't load the whole table in-memory.
-
-- Successfully inserted/mapped rows are saved in a cache. When you start
-  processing again, the module will skip processed rows and continue from the
-  last known succesful row.
 
 ## Tests
 
